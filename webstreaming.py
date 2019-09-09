@@ -2,7 +2,7 @@
 # python webstreaming.py --ip 0.0.0.0 --port 8000
 
 # import the necessary packages
-from pyimagesearch.motion_detection import SingleMotionDetector
+# from pyimagesearch.motion_detection import SingleMotionDetector
 from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
@@ -41,7 +41,7 @@ def detect_motion(frameCount):
 
 	# initialize the motion detector and the total number of frames
 	# read thus far
-	md = SingleMotionDetector(accumWeight=0.1)
+	# md = SingleMotionDetector(accumWeight=0.1)
 	total = 0
 
 	# loop over frames from the video stream
@@ -62,21 +62,21 @@ def detect_motion(frameCount):
 		# if the total number of frames has reached a sufficient
 		# number to construct a reasonable background model, then
 		# continue to process the frame
-		if total > frameCount:
-			# detect motion in the image
-			motion = md.detect(gray)
+		# if total > frameCount:
+		# 	# detect motion in the image
+		# 	motion = md.detect(gray)
 
-			# cehck to see if motion was found in the frame
-			if motion is not None:
-				# unpack the tuple and draw the box surrounding the
-				# "motion area" on the output frame
-				(thresh, (minX, minY, maxX, maxY)) = motion
-				cv2.rectangle(frame, (minX, minY), (maxX, maxY),
-					(0, 0, 255), 2)
+		# 	# cehck to see if motion was found in the frame
+		# 	if motion is not None:
+		# 		# unpack the tuple and draw the box surrounding the
+		# 		# "motion area" on the output frame
+		# 		(thresh, (minX, minY, maxX, maxY)) = motion
+		# 		cv2.rectangle(frame, (minX, minY), (maxX, maxY),
+		# 			(0, 0, 255), 2)
 		
-		# update the background model and increment the total number
-		# of frames read thus far
-		md.update(gray)
+		# # update the background model and increment the total number
+		# # of frames read thus far
+		# md.update(gray)
 		total += 1
 
 		# acquire the lock, set the output frame, and release the
