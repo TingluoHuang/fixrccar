@@ -1,10 +1,21 @@
 import socket
 from pynput import keyboard
+import threading 
 
 TCP_IP = '192.168.0.110'
 TCP_PORT = 9999
 BUFFER_SIZE = 1024
 
+def speedUp(target):
+    print("Incress speed to: " + target)
+    if target == 50:
+        speedTimer_2.start()
+    elif target == 75:
+        speedTimer_3.start()
+
+speedTimer_1 = threading.Timer(0.25, speedUp(50))
+speedTimer_2 = threading.Timer(0.25, speedUp(75))
+speedTimer_3 = threading.Timer(0.25, speedUp(100))
 
 def on_press(key):
     try:
@@ -13,6 +24,7 @@ def on_press(key):
         if key.char == 'w':
             print('GO')
             s.sendall(b'FORWORD')
+            speedTimer_1.start()
         elif key.char == 's':
             print('BACK')
             s.sendall(b'BACK')
@@ -38,6 +50,9 @@ def on_release(key):
         return False
     elif key.char == 'w':
         s.sendall(b'FORWORD_STOP')
+        speedTimer_1.cancel()
+        speedTimer_2.cancel()
+        speedTimer_3.cancel()
     elif key.char == 's':
         s.sendall(b'BACK_STOP')
     elif key.char == 'a':

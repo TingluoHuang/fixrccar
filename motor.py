@@ -10,6 +10,7 @@ def init():
     gpio.setup(18, gpio.OUT)
     gpio.setup(22, gpio.OUT)
     gpio.setup(23, gpio.OUT)
+    gpio.setup(4, gpio.OUT)
 
 def forward():
     # gpio.output(22, gpio.LOW)
@@ -71,6 +72,25 @@ print(gpio.VERSION)
 
 init()
 
+p=gpio.PWM(4,1000)
+p.start(25)
+
+def lowSpeed():
+    print("low")
+    p.ChangeDutyCycle(25)
+
+def MediumSpeed():
+    print("medium")
+    p.ChangeDutyCycle(50)
+
+def highSpeed():
+    print("high")
+    p.ChangeDutyCycle(75)
+
+def maxSpeed():
+    print("max")
+    p.ChangeDutyCycle(100)
+
 TCP_PORT = 9999
 BUFFER_SIZE = 16
 
@@ -104,6 +124,14 @@ while 1:
         right()
     elif data == 'RIGHT_STOP':
         right_stop()      
+    elif data == 'LOW_SPEED':
+        lowSpeed()      
+    elif data == 'MED_SPEED':
+        MediumSpeed()      
+    elif data == 'HIGH_SPEED':
+        highSpeed()  
+    elif data == 'MAX_SPEED':
+        maxSpeed()    
     elif data == 'STOP':
         conn.sendall(b'ACK')
         break
